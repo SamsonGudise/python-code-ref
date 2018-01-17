@@ -1,0 +1,1 @@
+aws ec2 describe-instances --instance-ids --filters  "Name=tag:aws:autoscaling:groupName,Values=atmail2-cnet-d0prod-v025" |grep "PrivateIpAddress" |awk '{print $2}' |grep -v "," |sort -u

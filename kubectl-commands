@@ -1,0 +1,19 @@
+kubectl run nginx --image=nginx:1.10.0
+kubectl get pods
+kubectl expose deployments nginx --port 80 --type LoadBalancer
+kubectl create -f pods/monolith.yaml
+kubectl describe pods monolith
+kubectl exec monolith --stdin --ty=tty -c monolith /bin/sh
+kubectl port-forward monolith 10080:80
+kubectl logs monolith
+kubectl logs -f monolith
+kubectl create secret generic tls-certs --from-file=tls
+kubectl describe secrets tls-certs
+kubectl label prod secure-monlith "secure=enabled"
+
+kubectl create -f deployments/auth.yaml
+kubectl describe deployments auth
+kubectl create -f services/auth.yaml
+kubectl create configmap bginx-frontend-conf --from-file=nginx/frontend.conf
+
+
